@@ -1,0 +1,12 @@
+# VSCode settings
+.vscode/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# pytest cache
+__pycache__
+.pytest_cache/
+.vscode
