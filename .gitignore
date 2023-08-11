@@ -1,5 +1,5 @@
 # VSCode settings
-.vscode/
+# .vscode/
 
 # Python cache files
 __pycache__/
@@ -9,4 +9,4 @@ __pycache__/
 # pytest cache
 __pycache__
 .pytest_cache/
-.vscode
+# .vscode

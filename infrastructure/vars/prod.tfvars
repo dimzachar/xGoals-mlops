@@ -1,6 +1,6 @@
 source_stream_name = "prod_shot_events"
 output_stream_name = "prod_shot_predictions"
-model_bucket = "prod-mlflow-models-code-owners"
+model_bucket = "prod-mlflow-models-shot-xgoals"
 lambda_function_local_path = "../lambda_function.py"
 docker_image_local_path = "../Dockerfile"
 ecr_repo_name = "prod_stream_model_xgoals"
