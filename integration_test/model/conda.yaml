@@ -5,9 +5,8 @@ dependencies:
 - pip<=23.1.2
 - pip:
   - mlflow==2.5.0
-  - numpy==1.25.1
+  - numpy==1.25.2
   - pandas==2.0.3
-  - psutil==5.9.5
   - scikit-learn==1.0.2
   - scipy==1.11.1
   - typing-extensions==4.7.1

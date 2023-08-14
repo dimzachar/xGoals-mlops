@@ -52,9 +52,9 @@ logger.info(actual_record)
 
 expected_record = {
     'model': 'xgoals_prediction_model',
-    # "version": os.getenv('RUN_ID'),
+    "version": os.getenv('RUN_ID'),
     'prediction': {
-        'shot_xgoals': 0.25,
+        'shot_xgoals': 0.26,
         'shot_id': 123,
     },
 }

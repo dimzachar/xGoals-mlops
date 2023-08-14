@@ -24,6 +24,23 @@ aws --endpoint-url=http://localhost:4566 \
     --stream-name ${PREDICTIONS_STREAM_NAME} \
     --shard-count 1
 
+
+# Fetch the run_id of the production model from MLflow
+RUN_ID=$(python scripts/fetch_run_id.py)
+echo "Fetched run_id: $RUN_ID"
+export RUN_ID
+
+# Download the model artifacts from S3
+S3_BUCKET="xgoals-test-exp"
+S3_PREFIX="9"
+# Create the destination directory if it doesn't exist
+DEST_DIR="model"
+
+# Define the S3 path and copy model data from S3 to the destination directory
+S3_PATH="s3://${S3_BUCKET}/${S3_PREFIX}/${RUN_ID}/artifacts/model/"
+aws s3 cp --recursive $S3_PATH $DEST_DIR
+
+
 pipenv run python test_docker.py
 
 ERROR_CODE=$?

@@ -25,6 +25,7 @@ def get_production_run_id(model_name="xgboost"):
     Returns:
     - run_id: The ID of the MLflow run that produced the "Production" model.
     """
+    mlflow.set_tracking_uri("http://ec2-54-172-188-75.compute-1.amazonaws.com:5000")
     client = MlflowClient()
     production_version = client.get_latest_versions(model_name, stages=["Production"])[
         0
@@ -72,6 +73,7 @@ class ModelService:
     def predict(self, features):
         df = pd.DataFrame([features])
         pred = self.model.predict(df)
+        logger.info("Prediction: %s", pred[0])
         return float(pred[0])
 
     def lambda_handler(self, event):

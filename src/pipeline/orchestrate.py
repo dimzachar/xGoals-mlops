@@ -1,3 +1,5 @@
+import os
+
 import mlflow
 from prefect import flow
 from prefect_aws import S3Bucket
@@ -30,7 +32,16 @@ def main_flow_s3():
     # mlflow.set_experiment("xgoals-experiment")
 
     # Uncomment the following lines if you want to set up MLflow tracking using a remote server.
-    TRACKING_SERVER_HOST = "ec2-54-172-188-75.compute-1.amazonaws.com"
+
+    # TRACKING_SERVER_HOST = "ec2-54-172-188-75.compute-1.amazonaws.com"
+    # mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
+    # mlflow.set_experiment("xgoals-experiment")
+    # print(f"tracking URI: '{mlflow.get_tracking_uri()}'")
+
+    TRACKING_SERVER_HOST = os.environ.get("MLFLOW_TRACKING_SERVER_HOST")
+    if not TRACKING_SERVER_HOST:
+        raise ValueError("MLFLOW_TRACKING_SERVER_HOST environment variable is not set!")
+
     mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
     mlflow.set_experiment("xgoals-experiment")
     print(f"tracking URI: '{mlflow.get_tracking_uri()}'")

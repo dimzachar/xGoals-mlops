@@ -14,6 +14,6 @@ flavors:
     model_format: xgb
     xgb_version: 1.7.6
 mlflow_version: 2.5.0
-model_uuid: 276075dd8ec54dc2b09699a42afc5f62
-run_id: 88521ecd80774920947e8bd9523b9fdf
-utc_time_created: '2023-07-25 09:03:15.526256'
+model_uuid: 2b55278953e841d8a55aa285a6a103c2
+run_id: 9211f23835914d3e81d33c1e7ff428a6
+utc_time_created: '2023-08-14 14:16:33.195622'
