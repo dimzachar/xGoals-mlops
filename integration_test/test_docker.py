@@ -45,17 +45,17 @@ print(response.json())
 # except json.JSONDecodeError:
 #     print(f"Failed to decode JSON. Response: {response.text}")
 
-# print("Status Code:", response.status_code)
-# print("Response Body:", response.text)
+print("Status Code:", response.status_code)
+print("Response Body:", response.text)
 
-# try:
-#     print("JSON Response:", response.json())
-# except ValueError:
-#     print("Cannot decode JSON response")
+try:
+    print("JSON Response:", response.json())
+except ValueError:
+    print("Cannot decode JSON response")
 
 
-# try:
-#     print("JSON Response:", response.json())
-# except ValueError:
-#     print("Cannot decode JSON response. Here is the raw response:")
-#     print(response.text)
+try:
+    print("JSON Response:", response.json())
+except ValueError:
+    print("Cannot decode JSON response. Here is the raw response:")
+    print(response.text)

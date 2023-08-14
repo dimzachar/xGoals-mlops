@@ -6,6 +6,7 @@ import logging
 import boto3
 import mlflow
 import pandas as pd
+from mlflow.tracking import MlflowClient
 
 # Only import xgboost if it's being used in your code
 # import xgboost as xgb
@@ -14,13 +15,30 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+def get_production_run_id(model_name="xgboost"):
+    """
+    Get the run_id of the model that's in the "Production" stage.
+
+    Parameters:
+    - model_name: The name of the registered model.
+
+    Returns:
+    - run_id: The ID of the MLflow run that produced the "Production" model.
+    """
+    client = MlflowClient()
+    production_version = client.get_latest_versions(model_name, stages=["Production"])[
+        0
+    ]
+    return production_version.run_id
+
+
 def get_model_location(run_id):
     model_location = os.getenv('MODEL_LOCATION')
 
     if model_location is not None:
         return model_location
 
-    model_bucket = os.getenv('MODEL_BUCKET', 'xgoals')
+    model_bucket = os.getenv('MODEL_BUCKET', 'xgoals-test-exp')
     experiment_id = os.getenv('MLFLOW_EXPERIMENT_ID', '1')
 
     model_location = f's3://{model_bucket}/{experiment_id}/{run_id}/artifacts/model'
@@ -110,7 +128,8 @@ def create_kinesis_client():
     return boto3.client('kinesis', endpoint_url=endpoint_url)
 
 
-def init(prediction_stream_name: str, run_id: str, test_run: bool):
+def init(prediction_stream_name: str, test_run: bool):
+    run_id = get_production_run_id()
     model = load_model(run_id)
 
     callbacks = []

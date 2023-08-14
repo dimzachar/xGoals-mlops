@@ -9,8 +9,11 @@ mlflow = "*"
 scikit-learn = "==1.0.2"
 xgboost = "*"
 pandas = "*"
-setuptools = "==67.2.0"
-
+setuptools = "==49.1.0"
+prefect = "*"
+hyperopt = "*"
+prefect-aws = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pytest = "*"
