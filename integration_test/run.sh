@@ -19,10 +19,6 @@ DIR="$(dirname "$(readlink -f "$0")")"
 # Source the config.env from the project root
 source "$DIR/../config.env"
 
-
-
-# export MLFLOW_TRACKING_SERVER_HOST="ec2-3-89-161-250.compute-1.amazonaws.com"
-# export MLFLOW_EXPERIMENT_NAME="xgoals-experiment-new"
 export PREDICTIONS_STREAM_NAME="shot_predictions"
 
 # Fetch the run_id of the production model from MLflow
