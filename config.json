@@ -1,0 +1,6 @@
+{
+    "S3_PRESIGNED_URLS": [
+        "https://events-football-data.s3.amazonaws.com/data/raw/events_European_Championship.json?AWSAccessKeyId=AKIAS6X4WS4K3M4IEJF7&Signature=RgAhJ0Qf4jhva2fWZE5b%2F5ZrDlA%3D&Expires=1693044889",
+        "https://events-football-data.s3.amazonaws.com/data/raw/events_World_Cup.json?AWSAccessKeyId=AKIAS6X4WS4K3M4IEJF7&Signature=RKXjWpXpFQ0B4USakek%2BIJ1YsXs%3D&Expires=1693045586"
+    ]
+}

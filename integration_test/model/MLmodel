@@ -13,7 +13,7 @@ flavors:
     model_class: xgboost.core.Booster
     model_format: xgb
     xgb_version: 1.7.6
-mlflow_version: 2.5.0
-model_uuid: 2b55278953e841d8a55aa285a6a103c2
-run_id: 9211f23835914d3e81d33c1e7ff428a6
-utc_time_created: '2023-08-14 14:16:33.195622'
+mlflow_version: 2.6.0
+model_uuid: dbb7e440459b47738f5cdb963c571ad3
+run_id: cc5f1fe63f3f4583b5423de0d6433084
+utc_time_created: '2023-08-18 11:00:05.282369'

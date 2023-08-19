@@ -13,7 +13,23 @@ else
     echo "no need to build image ${LOCAL_IMAGE_NAME}"
 fi
 
+# Determine the script's directory relative to the project root
+DIR="$(dirname "$(readlink -f "$0")")"
+
+# Source the config.env from the project root
+source "$DIR/../config.env"
+
+
+
+# export MLFLOW_TRACKING_SERVER_HOST="ec2-3-89-161-250.compute-1.amazonaws.com"
+# export MLFLOW_EXPERIMENT_NAME="xgoals-experiment-new"
 export PREDICTIONS_STREAM_NAME="shot_predictions"
+
+# Fetch the run_id of the production model from MLflow
+RUN_ID=$(python scripts/fetch_run_id.py)
+echo "Fetched run_id: $RUN_ID"
+export RUN_ID
+
 
 docker-compose up -d
 
@@ -25,20 +41,16 @@ aws --endpoint-url=http://localhost:4566 \
     --shard-count 1
 
 
-# Fetch the run_id of the production model from MLflow
-RUN_ID=$(python scripts/fetch_run_id.py)
-echo "Fetched run_id: $RUN_ID"
-export RUN_ID
-
 # Download the model artifacts from S3
 S3_BUCKET="xgoals-test-exp"
-S3_PREFIX="9"
+S3_PREFIX="10"
 # Create the destination directory if it doesn't exist
 DEST_DIR="model"
 
 # Define the S3 path and copy model data from S3 to the destination directory
 S3_PATH="s3://${S3_BUCKET}/${S3_PREFIX}/${RUN_ID}/artifacts/model/"
 aws s3 cp --recursive $S3_PATH $DEST_DIR
+
 
 
 pipenv run python test_docker.py
@@ -63,4 +75,4 @@ if [ ${ERROR_CODE} != 0 ]; then
 fi
 
 
-docker-compose down
+# docker-compose down

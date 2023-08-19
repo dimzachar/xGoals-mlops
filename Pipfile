@@ -14,6 +14,9 @@ prefect = "*"
 hyperopt = "*"
 prefect-aws = "*"
 psycopg2-binary = "*"
+evidently = "*"
+psycopg = "*"
+psycopg_binary = "*"
 
 [dev-packages]
 pytest = "*"

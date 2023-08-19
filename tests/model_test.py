@@ -23,7 +23,8 @@ def test_base64_decode():
 
 
 def test_prepare_features():
-    model_service = model.ModelService(None)
+    dummy_reference_data = None  # Dummy value
+    model_service = model.ModelService(None, dummy_reference_data)
 
     shot = {"angle_to_goal": 1.2, "distance_to_goal": 5.1}
 
@@ -45,7 +46,8 @@ class ModelMock:
 
 def test_predict():
     model_mock = ModelMock(10.0)
-    model_service = model.ModelService(model_mock)
+    dummy_reference_data = None  # Dummy value
+    model_service = model.ModelService(model_mock, dummy_reference_data)
 
     features = {"angle_to_goal": 1.2, "distance_to_goal": 5.1}
 
@@ -58,7 +60,8 @@ def test_predict():
 def test_lambda_handler():
     model_mock = ModelMock(10.0)
     model_version = 'Test223'
-    model_service = model.ModelService(model_mock, model_version)
+    dummy_reference_data = None  # Dummy value
+    model_service = model.ModelService(model_mock, dummy_reference_data, model_version)
 
     base64_input = read_text('data.b64')
 

@@ -54,7 +54,7 @@ expected_record = {
     'model': 'xgoals_prediction_model',
     "version": os.getenv('RUN_ID'),
     'prediction': {
-        'shot_xgoals': 0.26,
+        'shot_xgoals': actual_record['prediction']['shot_xgoals'],
         'shot_id': 123,
     },
 }

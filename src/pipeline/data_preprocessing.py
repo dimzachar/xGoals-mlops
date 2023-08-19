@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import xgboost as xgb
 from prefect import task
 from sklearn.model_selection import train_test_split
@@ -10,10 +11,14 @@ def filter_and_transform_shot_data(data):
     """
     Filter the data to retain only shot events and perform necessary transformations.
     """
-
     print("Filtering and transforming shot data...")
 
-    shot_df = data[data['subEventName'] == 'Shot'].copy()
+    # Convert the data dictionary to a DataFrame
+    df = pd.DataFrame(data)
+
+    # Filter out shot events
+    shot_df = df[df['subEventName'] == 'Shot'].copy()
+
     shot_df["X"] = shot_df['positions'].apply(
         lambda cell: (100 - cell[0]['x']) * 105 / 100
     )

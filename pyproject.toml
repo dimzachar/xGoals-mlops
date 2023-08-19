@@ -8,7 +8,10 @@ disable = [
     "invalid-name",
     "too-few-public-methods",
     "ungrouped-imports",
-    "invalid-unary-operand-type"
+    "invalid-unary-operand-type",
+    "broad-exception-caught",
+    "unused-argument",
+    "too-many-locals"
 ]
 
 [tool.black]

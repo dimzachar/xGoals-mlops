@@ -1,22 +1,40 @@
 import os
 
 import pandas as pd
+import requests
 from prefect import task
 
-
 @task
-def load_data_from_s3(bucket, data_path):
+def download_from_url_to_path(url, save_path="data/raw/"):
     """
-    Load data from the S3 bucket and save it to the local path.
+    Download data from a given URL and save it to the specified directory.
+
+    :param url: str, The URL from which data should be downloaded.
+    :param save_path: str, The path to the directory where data should be saved.
+    :return: str, Path to the downloaded file.
     """
-    print(f"Attempting to download data from S3 bucket to {data_path}...")
-    try:
-        bucket.download_folder_to_path(from_folder=data_path, to_folder=data_path)
-        print(f"Data successfully downloaded to {data_path}.")
-        return data_path
-    except Exception as e:
-        print(f"Failed to download data from S3. Error: {e}")
-        raise ValueError(f"Failed to download data from S3. Error: {e}") from e
+
+    # Extract filename from the URL
+    filename = url.split("/")[-1].split("?")[0]
+    if ".json" in filename:
+        filename = filename.split(".json")[0] + ".json"
+
+    TIMEOUT_SECONDS = 10
+
+    # Use requests to download the file
+    with requests.get(url, stream=True, timeout=TIMEOUT_SECONDS) as r:
+        r.raise_for_status()
+
+        # Create a directory if it doesn't exist
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+
+        # Save the file to the directory
+        with open(os.path.join(save_path, filename), 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+    return os.path.join(save_path, filename)
 
 
 @task

@@ -9,7 +9,12 @@ quality_checks:
 	black .
 	pylint --recursive=y .
 
-build: quality_checks test
+
+train: quality_checks test
+	bash src/pipeline/train.sh
+
+
+build: train quality_checks test
 	docker build -t ${LOCAL_IMAGE_NAME} .
 
 integration_test: build
