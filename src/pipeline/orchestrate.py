@@ -61,10 +61,6 @@ def main_flow_s3(config_path):
     for url in urls:
         download_from_url_to_path(url)
 
-    # Download data from the S3 bucket.
-    # print("Downloading data from S3 bucket...")
-    # data_path = load_data_from_s3(s3_bucket, data_path)
-
     # Read the raw data from the downloaded path.
     print("Reading raw data...")
     raw_data = read_data(data_path)
