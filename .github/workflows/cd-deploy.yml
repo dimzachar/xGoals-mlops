@@ -36,7 +36,7 @@ jobs:
         id: tf-plan
         working-directory: 'infrastructure'
         run: |
-          terraform init -backend-config="key=xGoals-mlops-prod.tfstate" -reconfigure && terraform plan -var-file=vars/prod.tfvars
+          terraform init -backend-config="key=mlops-xgoals-prod.tfstate" --reconfigure && terraform plan -var-file=vars/prod.tfvars
 
       - name: TF Apply
         id: tf-apply
