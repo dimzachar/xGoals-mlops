@@ -24,7 +24,7 @@ The primary objective is to construct an end-to-end machine learning solution fo
 ## Directory Layout
 
 <details>
-  <summary>▶️ Click to toggle the directory layout!</summary>
+  <summary>Click to toggle the directory layout!</summary>
 
 ```
 xGoals-mlops/
