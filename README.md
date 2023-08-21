@@ -1,4 +1,7 @@
-# Introduction
+# XGoals MLOps end-to-end Project
+
+
+## Introduction
 
 This project is part of the [DataTalksClub/mlops-zoomcamp course](https://github.com/DataTalksClub/mlops-zoomcamp), an initiative focused on integrating the principles of MLOps with real-world applications.
 
@@ -9,7 +12,7 @@ A pivotal aspect of this project is its foundation on a simplified xGoals model,
 But this project is not just about creating an xGoals model. It's about building an end-to-end machine learning pipeline, emphasizing scalability, reproducibility, and maintainability. Leveraging the principles of MLOps, the xGoals project ensures that the journey from data ingestion to model deployment is seamless, efficient, and robust.
 
 
-# Problem Statement
+## Problem Statement
 The primary objective is to construct an end-to-end machine learning solution for the xG metric. This solution would:
 
 - Predict the likelihood of a shot leading to a goal.
@@ -55,11 +58,11 @@ xGoals-mlops/
 </details>
 
 
-# Data
+## Data
 
 The primary source of this data is a significant contribution to the field of soccer analytics, known as the [Soccer match event dataset](https://figshare.com/collections/Soccer_match_event_dataset/4415000/2). 
 
-This dataset contains event data for various tournaments, including the European Championship and the World Cup, allowing for a detailed analysis of shots and their likelihood of resulting in goals. and is a significant contribution to the field of soccer analytics.
+This dataset contains event data for various tournaments, including the European Championship and the World Cup, allowing for a detailed analysis of shots and their likelihood of resulting in goals.
 
 Soccer analytics has gained immense traction in both academia and the industry, especially with the advent of sensing technologies that offer high-fidelity data streams from every match. However, a significant challenge has been the limited public availability of such detailed data, as they are predominantly owned by specialized companies. Addressing this gap, the Soccer match event dataset, collected by [Wyscout](https://wyscout.com/), offers the largest open collection of soccer logs. It encompasses all the spatiotemporal events, such as passes, shots, fouls, and more, from every match of an entire season across seven major competitions: La Liga, Serie A, Bundesliga, Premier League, Ligue 1, FIFA World Cup 2018, and UEFA Euro Cup 2016.
 
@@ -75,9 +78,9 @@ The data ingestion mechanism in our pipeline is designed to fetch data from the 
 
 It's worth noting that while we've chosen the two smallest JSON files for this project, incorporating more data can enhance the model's accuracy and predictive power. Ideally, for a more robust setup, permissions would be set on the S3 Bucket where the data resides, or alternative data ingestion methods would be employed.
 
-# Setup 
+## Setup 
 
-I have used a development `t2.large` EC2 instance with python 3.9 and [MLflow RDS database]((https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/02-experiment-tracking/mlflow_on_aws.md))). You will also need Anaconda, Docker and Docker-Compose. Here, are [basic instructions](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/01-intro/README.md). You should configure AWS and your github account creds.
+I have used a development `t2.large` Amazon EC2 (Elastic Compute Cloud) machine with python 3.9 and [MLflow RDS database](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/02-experiment-tracking/mlflow_on_aws.md). You will also need Anaconda, Docker and Docker-Compose. Here, are [basic instructions](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/01-intro/README.md). Configure also AWS and your github account creds from github settings.
 
 - Clone the Repository on EC2 instance and navigate to the project directory:
 
@@ -86,9 +89,9 @@ git clone https://github.com/dimzachar/xGoals-mlops.git
 cd xGoals-mlops
 ```
 
-You will need have ports open 22 (SSH), 5000 (MLflow), 3000 (Grafana), 8081 (Adminer), 8080, 5432 (Postgress db) and create S3 Bucket for the MLflow artifacts. Make sure you also have aws configured.
+You will need to have ports open 22 (SSH), 5000 (MLflow), 3000 (Grafana), 8081 (Adminer), 8080, 5432 (Postgress db) and create S3 Bucket for the MLflow artifacts. Make sure you also have aws configured.
 
-- Env dependencies
+- Environment Dependencies
 
 Setup the environment by installing
 
@@ -99,11 +102,11 @@ pipenv install --dev
 pipenv shell
 ```
 
-### Pre-commit Hooks
+- Pre-commit Hooks
 
 Pre-commit hooks are scripts that are executed automatically before a commit is made to the repository. They can be used to enforce coding standards, run tests, or perform any other checks to ensure the quality of the code. By using pre-commit hooks, you can ensure that only code that meets your defined standards is committed to the repository.
 
-Use
+Use the following command:
 
 ```bash
 make setup
@@ -113,7 +116,7 @@ that executes `pipenv install --dev` and `pre-commit install`.
 
 
 
-# Notebooks
+## Notebooks
 
 You can explore the notebooks as a starter that include:
 
@@ -123,15 +126,15 @@ You can explore the notebooks as a starter that include:
 
 - Feature Selection: Based on our EDA, we identify which features are most relevant for predicting whether a shot results in a goal: 
 
-Distance to Goal: This is often a key determinant of whether a shot results in a goal. Generally, the closer a shot is to the goal, the higher the probability it will be successful. You can calculate this from the positions field in the data.
+Distance to Goal: Distance plays a pivotal role in determining the likelihood of a shot turning into a goal. Generally, shots taken closer to the goal have a higher probability of success.
 
-Angle to Goal: The angle to the goal can significantly influence whether a shot results in a goal. A shot taken directly in front of the goal (small angle) has a higher chance of success compared to a shot from a tight angle. This can also be calculated from the positions field.
+Angle to Goal: The angle from which the shot is taken can significantly impact its success rate. A shot taken directly in front of the goal typically has a higher chance of scoring compared to one from a tight angle.
 
 Shot Type: The type of shot (e.g., header, right foot, left foot) can also affect the likelihood of scoring. This information might be contained in the tags or subEventName field.
 
 This will form the basis of our xG model.
 
-# Workflow Orchestration - Training Pipeline
+## Workflow Orchestration - Training Pipeline
 
 We refactor the code from notebooks and orchestrate the entire training pipeline using Prefect. We use Prefect to automate tasks that can be performed before data comes in real-time. This ensures that tasks run in the right sequence and that any issues are handled gracefully.
 
@@ -181,7 +184,7 @@ which first executes unit tests using the pytest framework on the tests/ directo
 
 After these are passed, it triggers the training pipeline.
 
-The objective function to minimize is the negative AUC. We are logging the AUC value for each set of hyperparameters and saving the model using MLflow.
+The goal is to minimize the negative AUC as the objective function. We are logging the AUC value for each set of hyperparameters and saving the model using MLflow.
 Only the best-performing model (in terms of `AUC`) is promoted as the "Production" version.
 Once trained, this model can predict the likelihood of a shot resulting in a goal based on the features of the shot.
 The production-ready model is used for real-time predictions using AWS Lambda.
@@ -207,7 +210,7 @@ http://127.0.0.1:4200/
 ![prefect-flow](https://github.com/dimzachar/xGoals-mlops/blob/master/images/prefect-flow.png)
 
 
-# Streaming
+## Streaming
 
 The idea behind the use of Streaming deployment would be to make predictions in real time, such as live during a match as shots are taken.
 
@@ -239,7 +242,7 @@ We need to setup:
 ![architecture](https://github.com/dimzachar/xGoals-mlops/blob/master/images/architecture.svg)
 
 
-## Model Deployment and Monitoring
+### Model Deployment and Monitoring
 
 You will need to manually create the two streams with
 
@@ -247,7 +250,7 @@ You will need to manually create the two streams with
 aws kinesis create-stream --stream-name shot_predictions --shard-count 1 && aws kinesis create-stream --stream-name xgoals_events --shard-count 1
 ```
 
-and seem them with
+and see them with
 ```bash
 aws kinesis list-streams
 ```
@@ -272,7 +275,7 @@ make integration_test
 
 you can automate the build step too.
 
-## Publish the model to the Elastic Container Registry (ECR)
+### Publish the model to the Elastic Container Registry (ECR)
 
 - Creating an ECR Repository:
 
@@ -311,7 +314,7 @@ docker push ${REMOTE_IMAGE}
 
 Check `scripts/publish.sh` and replace with your own variables. Later on with Terraform, we publish the docker image to ECR automatically.
 
-## Monitor Model Performance
+### Monitor Model Performance
 
 Monitoring the performance of machine learning models is crucial in real-world applications. As data evolves over time, the model's performance can degrade, leading to suboptimal predictions. This can be due to various reasons, such as changes in data distribution (data drift) or the emergence of new patterns that the model hasn't seen during training. To ensure that our models remain effective and relevant, we need to continuously monitor their performance and be ready to retrain or fine-tune them when necessary.
 
@@ -321,7 +324,7 @@ We utilize the Evidently library to monitor the model's performance. Evidently i
 2. **Current Data**: This is the new data that the model is currently scoring. It represents the most recent data points and can be used to detect any shifts or drifts from the reference data.
 3. **Model Predictions**: For both the reference and current data, the model's predictions are recorded. These predictions are then used to compute various metrics to assess the model's performance.
 
-### Key Metrics and Reports
+#### Key Metrics and Reports
 
 The code uses several metrics provided by Evidently to monitor the model:
 
@@ -335,26 +338,26 @@ All these metrics are stored in a PostgreSQL database (`opt_metrics` table) for 
 - **Adminer**: A lightweight database management tool that provides a web interface to manage the PostgreSQL database. It's accessible on port `8081`.
 - **Grafana**: An open-source platform for monitoring and observability. With Grafana, you can visualize the metrics from your application in real-time, making it easier to detect anomalies, drifts, and overall model performance. Grafana is accessible on port `3000` and is configured with custom data sources and dashboards.
 
-### Setting Up Monitoring
+#### Setting Up Monitoring
 
 The `ModelService` class is responsible for handling incoming data, making predictions, and monitoring drift. When the buffer of incoming data reaches a certain threshold (`BUFFER_THRESHOLD`), the drift monitoring process is triggered. The `monitor_drift` method computes the aforementioned metrics and stores them in the database.
 
-Make sure to delete streams in the end
+Make sure to delete streams using the 
 
 ```bash
 aws kinesis delete-stream --stream-name shot_predictions && aws kinesis delete-stream --stream-name xgoals_events
 ```
 
-and any other service.
+command in the end and any other service that is open.
 
 
-# Terraform
+## Terraform
 
 This is an infrastructure as code (IaC) tool for building, changing, and versioning infrastructure safely and efficiently. 
-We use Terraform to automate the process of setting up and managing the cloud infrastructure, including the Kinesis streams and Lambda functions. The files can be found in the `infrastructure` folder.
+Terraform is used to automate the process of setting up and managing the cloud infrastructure, including the Kinesis streams and Lambda functions. The files can be found in the `infrastructure` folder.
 You need to have Terraform installed in your EC2 machine, instructions [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli). See the [course notes](https://github.com/dimzachar/mlops-zoomcamp/blob/master/notes/Week_6/terraform_intro.md) for further details.
 
-Before you start make sure to manually create state bucket
+Before you start, ensure that you manually create the state bucket using the following command:
 
 ```bash
 aws s3api create-bucket --bucket tf-state-xgoals-mlops
@@ -406,39 +409,38 @@ terraform destroy -var-file=vars/prod.tfvars
 ```
 
 
-## GitHub Actions for CI/CD
+### GitHub Actions for CI/CD
 
 It allows developers to define workflows directly within their repositories. These workflows can be triggered by various events, such as a push or pull request, and can perform a wide range of tasks, from running tests to deploying applications.
 
-### Setting Up GitHub Actions
+#### Setting Up GitHub Actions
 
 1. **Continuous Integration (CI) Workflow**:
-    - Triggered on pull requests to the `develop` branch.
-    - Checks out the code.
-    - Sets up the required Python version.
-    - Installs dependencies.
-    - Runs unit tests and linters.
-    - Configures AWS credentials.
-    - Executes integration tests.
+    - Triggered on pull requests to the `develop` branch
+    - Checks out the code
+    - Sets up the required Python version
+    - Installs dependencies
+    - Runs unit tests and linters
+    - Configures AWS credentials
 
 2. **Continuous Deployment (CD) Workflow**:
-    - Triggered on pushes to the `develop` branch.
-    - Checks out the code and configures AWS credentials.
-    - Trains the model.
-    - Defines and applies infrastructure changes using Terraform.
-    - Builds and pushes Docker images to Amazon ECR.
-    - Retrieves model artifacts and updates the Lambda function with the latest model.
+    - Triggered on pushes to the `develop` branch
+    - Checks out the code and configures AWS credentials
+    - Trains the model
+    - Defines and applies infrastructure changes using Terraform
+    - Builds and pushes Docker images to Amazon ECR
+    - Retrieves model artifacts and updates the Lambda function with the latest model
 
-### Deployment with GitHub Actions
+#### Deployment with GitHub Actions
 
 The CI/CD pipeline, as defined in the provided GitHub Actions workflows, ensures a seamless deployment process. It includes:
 
-- Running tests to ensure code quality and functionality.
-- Applying code formatting using `black`.
-- Checking for linting errors with `pylint`.
-- Ensuring proper import order with `isort`.
-- Building Docker images and pushing them to Amazon ECR.
-- Deploying the model and updating AWS Lambda functions with the latest model.
+- Running tests to ensure code quality and functionality
+- Applying code formatting using `black`
+- Checking for linting errors with `pylint`
+- Ensuring proper import order with `isort`
+- Building Docker images and pushing them to Amazon ECR
+- Deploying the model and updating AWS Lambda functions with the latest model
 
 By automating these processes, you can ensure that your application is always in a deployable state, and any changes made to the codebase are immediately tested and deployed.
 
