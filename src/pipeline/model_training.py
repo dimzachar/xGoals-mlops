@@ -103,7 +103,7 @@ def hyperopt_train(dtrain, dval):
         fn=objective,
         space=search_space,
         algo=tpe.suggest,
-        max_evals=20,
+        max_evals=50,
         trials=trials,
     )
     best_auc = max(trial['result']['auc_value'] for trial in trials.trials)
@@ -136,16 +136,4 @@ def hyperopt_train(dtrain, dval):
         "Hyperparameter Optimization Complete. Optimal Parameters: "
         f"{optimal_params} with AUC: {best_auc}"
     )
-    # Load the best model using the run ID
-    # booster = load_model_from_mlflow(best_run_id)
-
-    # print(f"Boosting rounds of loaded model: {booster.best_iteration}")
-
     return optimal_params, best_run_id
-
-
-# def load_model_from_mlflow(run_id):
-#     model_uri = f"runs:/{run_id}/model"
-#     print(f"Loading model from: {model_uri}")
-#     booster = mlflow.xgboost.load_model(model_uri)
-#     return booster
