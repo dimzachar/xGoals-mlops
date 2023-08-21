@@ -4,7 +4,7 @@ resource "aws_db_instance" "monitoring_rds" {
   engine               = "postgres"
   engine_version       = "13"
   instance_class       = var.instance_class
-  name                 = var.monitoring_postgres_db_name
+  identifier           = var.monitoring_postgres_db_name
   username             = var.monitoring_postgres_db_username
   password             = var.monitoring_postgres_db_password
   parameter_group_name = "default.postgres13"

@@ -8,11 +8,14 @@ export LAMBDA_FUNCTION="prod_prediction_lambda_mlops-xgoals"
 # Model artifacts bucket (MLflow experiments)
 export MODEL_BUCKET_DEV="xgoals"
 
-# Get latest RUN_ID from latest S3 partition.
-# NOT FOR PRODUCTION!
-# In practice, this is generally picked up from your experiment tracking tool such as MLflow or DVC
-export RUN_ID=$(aws s3api list-objects-v2 --bucket ${MODEL_BUCKET_DEV} \
---query 'sort_by(Contents, &LastModified)[-1].Key' --output=text | cut -f2 -d/)
+OUTPUT=$(python $PWD/../integration_test/scripts/fetch_run_id.py)
+RUN_ID=$(echo "$OUTPUT" | head -n 1)
+EXPERIMENT_ID=$(echo "$OUTPUT" | tail -n 1)
+echo "Fetched run_id: $RUN_ID"
+echo "Fetched experiment_id: $EXPERIMENT_ID"
+export RUN_ID
+# export RUN_ID=$(aws s3api list-objects-v2 --bucket ${MODEL_BUCKET_DEV} \
+# --query 'sort_by(Contents, &LastModified)[-1].Key' --output=text | cut -f2 -d/)
 
 # NOT FOR PRODUCTION!
 # Just mocking the artifacts from training process in the Prod env
