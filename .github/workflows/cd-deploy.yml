@@ -1,4 +1,4 @@
-name: CD-Deploy
+name: CD-Deploy with training
 on:
   push:
     branches:
@@ -7,9 +7,12 @@ on:
 jobs:
   build-push-deploy:
     runs-on: ubuntu-latest
+
+
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -17,11 +20,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-1"
 
+
+      - name: Make training script executable
+        run: chmod +x src/pipeline/train.sh
+
+      - name: Train Model
+        run: ./src/pipeline/train.sh 
+
       - uses: hashicorp/setup-terraform@v2
         with:
-          terraform_wrapper: false
-
-
+          terraform_wrapper: false     
 
       # Define the infrastructure
       - name: TF plan

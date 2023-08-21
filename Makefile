@@ -14,7 +14,7 @@ train: quality_checks test
 	bash src/pipeline/train.sh
 
 
-build: train quality_checks test
+build: train
 	docker build -t ${LOCAL_IMAGE_NAME} .
 
 integration_test: build

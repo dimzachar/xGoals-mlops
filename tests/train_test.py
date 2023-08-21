@@ -2,9 +2,11 @@ from pathlib import Path
 
 from src.pipeline.data_ingestion import read_data
 
+
 class MockBucket:
     def __init__(self, exception=False):
         self.exception = exception
+
 
 def test_read_data_with_json_files(tmpdir):
     """Test reading data from a directory with JSON files."""

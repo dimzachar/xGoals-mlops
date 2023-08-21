@@ -22,9 +22,17 @@ source "$DIR/../config.env"
 export PREDICTIONS_STREAM_NAME="shot_predictions"
 
 # Fetch the run_id of the production model from MLflow
-RUN_ID=$(python scripts/fetch_run_id.py)
+# RUN_ID=$(python scripts/fetch_run_id.py)
+# echo "Fetched run_id: $RUN_ID"
+# export RUN_ID
+
+OUTPUT=$(python scripts/fetch_run_id.py)
+RUN_ID=$(echo "$OUTPUT" | head -n 1)
+EXPERIMENT_ID=$(echo "$OUTPUT" | tail -n 1)
 echo "Fetched run_id: $RUN_ID"
+echo "Fetched experiment_id: $EXPERIMENT_ID"
 export RUN_ID
+export EXPERIMENT_ID
 
 
 docker-compose up -d
@@ -38,8 +46,8 @@ aws --endpoint-url=http://localhost:4566 \
 
 
 # Download the model artifacts from S3
-S3_BUCKET="xgoals-test-exp"
-S3_PREFIX="10"
+S3_BUCKET="xgoals"
+S3_PREFIX="$EXPERIMENT_ID"
 # Create the destination directory if it doesn't exist
 DEST_DIR="model"
 

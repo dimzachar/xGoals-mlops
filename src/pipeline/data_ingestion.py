@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 from prefect import task
 
+
 @task
 def download_from_url_to_path(url, save_path="data/raw/"):
     """

@@ -1,92 +1,84 @@
+# General Configuration
 variable "aws_region" {
   description = "AWS region to create resources"
   default     = "us-east-1"
 }
 
 variable "project_id" {
-  description = "project_id"
-  default = "mlops-xgoals"
+  description = "Unique identifier for the project"
+  default     = "mlops-xgoals"
 }
-# For MLflow RDS
+
+# MLflow RDS Configuration
 variable "mlflow_rds_identifier" {
   description = "The identifier for the MLflow RDS instance"
-  type        = string
   default     = "mlflow-db"
 }
 
 variable "mlflow_postgres_db_name" {
   description = "The name of the default database for MLflow"
-  type        = string
   default     = "mlflow_db"
 }
 
 variable "mlflow_postgres_db_username" {
   description = "Username for the MLflow RDS database"
-  type        = string
   default     = "mlflow_user"
 }
 
 variable "mlflow_postgres_db_password" {
   description = "Password for the MLflow RDS database"
-  type        = string
   default     = "mlflow_password"
   sensitive   = true
 }
 
-# For Model Monitoring RDS
+# Model Monitoring RDS Configuration
 variable "monitoring_rds_identifier" {
   description = "The identifier for the model monitoring RDS instance"
-  type        = string
   default     = "model-monitoring-db"
 }
 
 variable "monitoring_postgres_db_name" {
   description = "The name of the default database for model monitoring"
-  type        = string
-  default     = "model_monitoring"
+  default     = "model-monitoring"
 }
 
 variable "monitoring_postgres_db_username" {
   description = "Username for the model monitoring RDS database"
-  type        = string
-  default     = "monitoring_user"
+  default     = "monitoringuser"
 }
 
 variable "monitoring_postgres_db_password" {
   description = "Password for the model monitoring RDS database"
-  type        = string
-  default     = "monitoring_password"
+  default     = "monitoringpassword"
   sensitive   = true
 }
 
-
-
-# Streaming
-
+# Streaming Configuration
 variable "source_stream_name" {
-  description = ""
+  description = "Name of the source Kinesis stream"
 }
 
 variable "output_stream_name" {
-  description = ""
+  description = "Name of the output Kinesis stream"
 }
 
+# S3 and ECR Configuration
 variable "model_bucket" {
-  description = "s3_bucket"
+  description = "Name of the S3 bucket for storing models"
 }
 
 variable "lambda_function_local_path" {
-  description = ""
+  description = "Local path to the Lambda function code"
 }
 
 variable "docker_image_local_path" {
-  description = ""
+  description = "Local path to the Docker image for the Lambda function"
 }
 
 variable "ecr_repo_name" {
-  description = ""
+  description = "Name of the ECR repository for storing Docker images"
 }
 
 variable "lambda_function_name" {
-  description = ""
+  description = "Name of the Lambda function"
 }
