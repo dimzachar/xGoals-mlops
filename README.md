@@ -1,5 +1,50 @@
 # Expected Goals (xG) MLOps End-To-End Project
 
+## Table of Contents
+
+- [**Introduction**](#introduction)
+  - [About the Project](#about-the-project)
+  - [xGoals Metric Overview](#xgoals-metric-overview)
+  - [MLOps Principles](#mlops-principles)
+  
+- [**Problem Statement**](#problem-statement)
+  - [Objective](#objective)
+  - [Benefits of the xG Metric](#benefits-of-the-xg-metric)
+  - [Application in Football Analytics](#application-in-football-analytics)
+  
+- [**Directory Layout**](#directory-layout)
+
+- [**Data**](#data)
+  - [Source of Data](#source-of-data)
+  - [Soccer Match Event Dataset](#soccer-match-event-dataset)
+  - [Data Ingestion Mechanism](#data-ingestion-mechanism)
+  - [Data Access and Expiry](#data-access-and-expiry)
+  
+- [**Setup**](#setup)
+  - [Development Environment](#development-environment)
+  - [Required Tools](#required-tools)
+  - [Instructions](#instructions)
+  
+- [**Notebooks**](#notebooks)
+  - [Data Preparation](#data-preparation)
+  - [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
+  - [Feature Selection](#feature-selection)
+  
+- [**Workflow Orchestration & Training Pipeline**](#workflow-orchestration--training-pipeline)
+  - [Prefect](#prefect)
+  - [MLflow](#mlflow)
+  
+- [**Streaming**](#streaming)
+  - [Real-time Predictions](#real-time-predictions)
+  - [AWS Kinesis and Lambda](#aws-kinesis-and-lambda)
+  - [Model Deployment and Monitoring](#model-deployment-and-monitoring)
+
+- [**Terraform**](#terraform)
+  
+- [**GitHub Actions for CI/CD**](#github-actions-for-cicd)
+  - [Continuous Integration (CI) Workflow](#continuous-integration-ci-workflow)
+  - [Continuous Deployment (CD) Workflow](#continuous-deployment-cd-workflow)
+
 
 ## Introduction
 
