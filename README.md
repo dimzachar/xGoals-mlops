@@ -1,4 +1,4 @@
-# XGoals MLOps end-to-end Project
+# Expected Goals (xG) MLOps end-to-end Project
 
 
 ## Introduction
