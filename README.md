@@ -8,7 +8,7 @@
 - [**Data**](#data)
 - [**Setup**](#setup)
 - [**Notebooks**](#notebooks)
-- [**Workflow Orchestration & Training Pipeline**](#workflow-orchestration--training-pipeline)
+- [**Workflow Orchestration & Training Pipeline**](#workflow-orchestration---training-pipeline)
 - [**Streaming**](#streaming)
 - [**Terraform**](#terraform)
 - [**GitHub Actions for CI/CD**](#github-actions-for-cicd)
