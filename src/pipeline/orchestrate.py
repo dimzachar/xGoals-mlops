@@ -47,15 +47,7 @@ def main_flow_s3(config_path):
 
     print(f"tracking URI: '{mlflow.get_tracking_uri()}'")
 
-    print("Loading data configuration from S3 bucket...")
-    # Load data configuration from an S3 bucket.
-    # s3_bucket = S3Bucket.load("s3-bucket-config2")
     data_path = "data/raw/"
-
-    # url = os.environ.get("S3_PRESIGNED_URL")
-    # if not url:
-    #     raise ValueError("S3_PRESIGNED_URL environment variable is not set!")
-    # download_from_url_to_path(url)
 
     # Load URLs from the JSON config file
     with open(config_path, 'r', encoding='utf-8') as f:
